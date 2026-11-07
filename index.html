@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Capture it. | A little retro photo booth</title>
+  <meta name="description" content="Capture it. is a cozy, vintage-style online photo booth. Take photos with your webcam, pick a film filter, choose a layout and frame, and download your keepsake.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23400106'/%3E%3Ccircle cx='16' cy='17' r='7' fill='none' stroke='%23D9B991' stroke-width='2.5'/%3E%3Crect x='11' y='7' width='10' height='4' rx='1.5' fill='%23D9B991'/%3E%3C/svg%3E">
+
+  <!-- Free Google Fonts for the cut-out lettering and body text.
+       If they fail to load, the CSS falls back to Georgia / system fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&family=Old+Standard+TT:ital,wght@0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+
+    <!-- ============================================================
+         SCREEN 1: LANDING
+         ============================================================ -->
+    <section id="screen-landing" class="screen landing" aria-labelledby="site-title">
+      <div class="landing-inner">
+        <div class="landing-copy">
+          <h1 id="site-title" class="cutout cutout-xl" data-text="Capture it."></h1>
+          <p class="tagline">Little moments, captured forever.</p>
+          <p class="description">A little corner to capture your favourite moments.</p>
+
+          <svg class="squiggle" viewBox="0 0 220 24" aria-hidden="true">
+            <path d="M4 12 C 26 -2, 40 26, 62 12 S 100 -2, 122 12 S 160 26, 182 12 S 206 4, 216 10" />
+          </svg>
+
+          <button id="btn-start-photobooth" class="btn btn-primary btn-large" type="button">Start Photobooth</button>
+        </div>
+
+        <div class="landing-art" aria-hidden="true">
+          <div class="art-card">
+            <svg viewBox="0 0 320 270" class="camera-art" focusable="false">
+              <!-- swoosh under the camera -->
+              <path class="line-soft" d="M22 252 C 80 232, 150 266, 220 246 S 292 240, 304 250" />
+              <!-- camera hump / viewfinder -->
+              <path class="line" d="M108 84 C 114 56, 130 48, 150 48 L 176 48 C 196 48, 208 58, 214 84" />
+              <!-- body -->
+              <rect class="line fill-paper" x="34" y="80" width="252" height="148" rx="24" />
+              <!-- leather band -->
+              <path class="line-soft" d="M34 112 L 286 112" />
+              <!-- lens rings -->
+              <circle class="line fill-paper" cx="160" cy="164" r="54" />
+              <circle class="line" cx="160" cy="164" r="36" />
+              <circle class="line fill-tan" cx="160" cy="164" r="16" />
+              <path class="line-soft" d="M138 144 C 146 134, 158 130, 170 132" />
+              <!-- flash + shutter -->
+              <rect class="line fill-tan" x="56" y="92" width="36" height="14" rx="4" />
+              <circle class="line fill-tan" cx="246" cy="98" r="7" />
+              <!-- tiny stars -->
+              <path class="star" d="M268 40 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4z" />
+              <path class="star" d="M44 40 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" />
+              <path class="star" d="M292 196 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 2a: SETUP
+         ============================================================ -->
+    <section id="screen-setup" class="screen setup" aria-labelledby="setup-title" hidden>
+      <div class="container">
+        <h2 id="setup-title" class="cutout cutout-lg" data-text="Set up your booth" tabindex="-1"></h2>
+        <p class="lead">Pick the look you like best. Every preview below is your live camera, so you can see yourself in each filter. Your filter stays the same for the whole session.</p>
+
+        <fieldset class="group">
+          <legend>1. Choose a filter</legend>
+          <div id="filter-options" class="filter-grid" role="group" aria-label="Filters">
+            <button type="button" class="option-card filter-card" data-filter="warm" aria-pressed="false">
+              <canvas class="filter-sample" width="320" height="240"></canvas>
+              <span class="option-name">Warm Film</span>
+              <span class="option-note">Soft, golden and cozy</span>
+            </button>
+            <button type="button" class="option-card filter-card" data-filter="bw" aria-pressed="false">
+              <canvas class="filter-sample" width="320" height="240"></canvas>
+              <span class="option-name">Black &amp; White</span>
+              <span class="option-note">Classic monochrome</span>
+            </button>
+            <button type="button" class="option-card filter-card" data-filter="faded" aria-pressed="false">
+              <canvas class="filter-sample" width="320" height="240"></canvas>
+              <span class="option-name">Faded Retro</span>
+              <span class="option-note">Muted, sun-worn colour</span>
+            </button>
+            <button type="button" class="option-card filter-card" data-filter="sepia" aria-pressed="false">
+              <canvas class="filter-sample" width="320" height="240"></canvas>
+              <span class="option-name">Sepia</span>
+              <span class="option-note">Warm brown tones</span>
+            </button>
+          </div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>2. How many photos?</legend>
+          <div id="count-options" class="count-row" role="group" aria-label="Number of photos">
+            <button type="button" class="pill" data-count="1" aria-pressed="false">1 photo</button>
+            <button type="button" class="pill" data-count="3" aria-pressed="false">3 photos</button>
+            <button type="button" class="pill is-selected" data-count="4" aria-pressed="true">4 photos</button>
+          </div>
+        </fieldset>
+
+        <p class="camera-note">
+          Your browser will ask to use your camera so you can preview the filters on yourself.
+          Your photos never leave your device. Everything happens right here in the browser.
+        </p>
+
+        <div id="setup-camera-status" class="inline-message camera-status" role="alert" hidden>
+          <span id="setup-camera-text"></span>
+          <button id="btn-setup-retry" class="btn btn-ghost btn-small" type="button">Retry camera</button>
+        </div>
+
+        <!-- Invisible video that feeds the live filter previews -->
+        <video id="setup-video" class="hidden-video" autoplay playsinline muted></video>
+
+        <p id="setup-message" class="inline-message" role="alert" hidden></p>
+
+        <div class="button-row">
+          <button id="btn-setup-back" class="btn btn-ghost" type="button">Back</button>
+          <button id="btn-start-session" class="btn btn-primary" type="button">Start Session</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 2b: BOOTH (camera + countdown + review)
+         ============================================================ -->
+    <section id="screen-booth" class="screen booth" aria-labelledby="booth-title" hidden>
+      <div class="container booth-container">
+        <h2 id="booth-title" class="cutout cutout-md" data-text="Say cheese" tabindex="-1"></h2>
+
+        <div class="booth-status">
+          <p id="progress-text" class="progress-text" aria-live="polite">Photo 1 of 4</p>
+          <div id="progress-dots" class="progress-dots" aria-hidden="true"></div>
+          <p id="filter-badge" class="filter-badge">Filter: Warm Film (locked)</p>
+        </div>
+
+        <div class="booth-layout">
+          <!-- Left: an empty photo strip that fills up as you take pictures -->
+          <aside id="photo-strip" class="photo-strip" aria-label="Your photo strip"></aside>
+
+          <!-- Right: live camera, countdown and review -->
+          <div class="booth-main">
+            <div id="stage" class="stage">
+              <video id="camera-video" autoplay playsinline muted></video>
+              <canvas id="review-canvas" hidden></canvas>
+              <div id="countdown" class="countdown" aria-live="assertive" hidden></div>
+              <div id="flash" class="flash" aria-hidden="true"></div>
+            </div>
+
+            <div id="camera-error" class="notice" role="alert" hidden>
+              <h3 id="camera-error-title">Camera problem</h3>
+              <p id="camera-error-text"></p>
+              <div class="button-row">
+                <button id="btn-error-back" class="btn btn-ghost" type="button">Back to setup</button>
+                <button id="btn-retry-camera" class="btn btn-primary" type="button">Retry camera</button>
+              </div>
+            </div>
+
+            <div id="booth-controls" class="booth-controls">
+              <button id="btn-take" class="btn btn-primary btn-large" type="button">Take photo</button>
+
+              <div id="review-actions" class="button-row" hidden>
+                <button id="btn-retake" class="btn btn-ghost" type="button">Retake</button>
+                <button id="btn-continue" class="btn btn-primary" type="button">Continue</button>
+              </div>
+
+              <button id="btn-booth-exit" class="btn btn-link" type="button">Leave booth</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 3: FINAL PREVIEW + DOWNLOAD
+         ============================================================ -->
+    <section id="screen-compose" class="screen compose" aria-labelledby="compose-title" hidden>
+      <div class="container compose-container">
+        <h2 id="compose-title" class="cutout cutout-lg compose-title" data-text="Your keepsake" tabindex="-1"></h2>
+
+        <div class="compose-grid">
+          <div class="compose-preview">
+            <canvas id="final-canvas" role="img" aria-label="Preview of your finished photo"></canvas>
+          </div>
+
+          <div class="compose-panel">
+            <p id="filter-note" class="filter-badge"></p>
+
+            <fieldset class="group">
+              <legend>Layout</legend>
+              <div id="layout-options" class="thumb-row" role="group" aria-label="Layouts"></div>
+            </fieldset>
+
+            <fieldset class="group">
+              <legend>Frame</legend>
+              <div id="frame-options" class="thumb-row" role="group" aria-label="Frames"></div>
+            </fieldset>
+
+            <div class="group">
+              <label for="caption-input" class="legend-like">Caption <span class="optional">(optional)</span></label>
+              <input id="caption-input" type="text" maxlength="40" placeholder="Add a little note" autocomplete="off">
+              <p id="caption-count" class="hint">0 / 40</p>
+            </div>
+
+            <p id="compose-message" class="inline-message" role="alert" hidden></p>
+
+            <div class="button-row stack-mobile">
+              <button id="btn-start-again" class="btn btn-ghost" type="button">Start Again</button>
+              <button id="btn-download" class="btn btn-primary" type="button">Download Photo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Small notifications (instead of alert boxes) -->
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+  <!-- Confirmation popup (instead of window.confirm) -->
+  <div id="confirm-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-text" hidden>
+    <div class="modal-card">
+      <p id="confirm-text"></p>
+      <div class="button-row">
+        <button id="confirm-no" class="btn btn-ghost" type="button">Keep going</button>
+        <button id="confirm-yes" class="btn btn-primary" type="button">Yes, clear it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
